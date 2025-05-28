@@ -7,12 +7,12 @@ See the help page `?run_medcodeapp` for more details.
 ## Install
 
 ```
-remotes::install_github("yourusername/medcodeapp")
+remotes::install_github("georgemsavva/medcodeapp")
 ```
 
 ## Run the app
 
 ```
 library(medcodeapp)
-run_app()
+run_medcodeapp()
 ```
