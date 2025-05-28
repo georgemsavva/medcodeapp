@@ -1,7 +1,7 @@
 Package: medcodeapp
 Type: Package
 Title: Medical Code Checker Shiny App
-Version: 0.1.0
+Version: 0.1.1
 Author: George Savva <george.savva@quadram.ac.uk>
 Maintainer: George Savva <george.savva@quadram.ac.uk>
 Description: A Shiny app for comparing medical code lists with a MedCode dictionary.

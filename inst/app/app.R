@@ -13,7 +13,7 @@ ui <- fluidPage(
     sidebarPanel(
       fileInput("codeFile", "Upload Code List Excel File"),
       uiOutput("sheetSelector"),
-      fileInput("dictFile", "Upload MedCode Dictionary Excel File"),
+      fileInput("dictFile", "Upload MedCode Dictionary Text/Excel File"),
       actionButton("run", "Run Comparison"),
       downloadButton("download", "Download Updated Excel")
     ),
@@ -50,10 +50,10 @@ server <- function(input, output, session) {
 
       output$status <- renderText("Processing...")
 
-      medicalData <- read_excel(dict_path)
+      if(dict_path %like% "xlsx") medicalData <- read_excel(dict_path,col_types = "text")
+      else medicalData <- fread(dict_path,colClasses = "character")
       setDT(medicalData)
       medicalData$Observations <- as.numeric(medicalData$Observations)
-
       xlsheets <- input$selectedSheets
       total <- length(xlsheets)
 
@@ -65,7 +65,7 @@ server <- function(input, output, session) {
         s <- xlsheets[i]
         incProgress(1/total, detail = paste("Processing", s))
 
-        dat <- read_excel(code_path, sheet = s)
+        dat <- read_excel(code_path, sheet = s,col_types = "text")
         setDT(dat)
 
         dat2 <- medicalData[
