@@ -1,6 +1,8 @@
 # medcodeapp
 
-A simple R package that wraps a Shiny app for comparing medical code lists.
+A simple R package that wraps a Shiny app for comparing medical code lists to the CPRD medical code browser.
+
+See the help page `?run_medcodeapp` for more details.
 
 ## Install
 
