@@ -73,17 +73,21 @@ server <- function(input, output, session) {
           !(MedCodeId %in% dat$MedCodeId) &
           !(Term %in% dat$Term)
         ]
+        dat3 <- medicalData[MedCodeId %in% dat$MedCodeId][dat[ , .SD , .SDcols=c("MedCodeId",setdiff(names(dat),names(medicalData)))],on="MedCodeId"][order(Observations, decreasing = TRUE)]
+        dat3[ , ]
         dat2 <- dat2[order(Observations, decreasing = TRUE)]
 
         summaryList[[s]] <- nrow(dat2)
 
-        combined <- rbindlist(list(old = dat, new = dat2), idcol = "Source", fill = TRUE)
+        combined <- rbindlist(list(old = dat3, new = dat2), idcol = "Source", fill = TRUE)
 
         addWorksheet(outbook, sheetName = s)
         writeData(outbook, s, combined)
-        addStyle(outbook, s, newStyle,
+        if(nrow(dat2)>0){
+          addStyle(outbook, s, newStyle,
                  rows = (nrow(dat) + 2):(nrow(dat) + nrow(dat2) + 1),
                  cols = 1:10, gridExpand = TRUE)
+          }
       }
 
       tmpfile <- tempfile(fileext = ".xlsx")
